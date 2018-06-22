@@ -18,3 +18,12 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+gradlePlugin {
+    plugins {
+        create("elasticmq") {
+            id = "de.friday.elasticmq"
+            implementationClass = "de.friday.gradle.elasticmq.ElasticMqPlugin"
+        }
+    }
+}
