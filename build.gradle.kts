@@ -1,9 +1,12 @@
+import io.gitlab.arturbosch.detekt.DetektCheckTask
+
 group = "de.friday"
 version = "1.0-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.2.50"
     id("java-gradle-plugin")
+    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC7-2"
 }
 
 repositories {
@@ -19,6 +22,8 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.getByName("check").dependsOn(tasks.withType<DetektCheckTask>())
+
 gradlePlugin {
     plugins {
         create("elasticmq") {
@@ -26,4 +31,11 @@ gradlePlugin {
             implementationClass = "de.friday.gradle.elasticmq.ElasticMqPlugin"
         }
     }
+}
+
+detekt {
+    defaultProfile(Action {
+        config = file("detekt.yml")
+        input = "src"
+    })
 }
