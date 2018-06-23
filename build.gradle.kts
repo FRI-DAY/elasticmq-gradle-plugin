@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.DetektCheckTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "de.friday"
 version = "1.0-SNAPSHOT"
@@ -20,6 +21,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.allWarningsAsErrors = true
 }
 
 tasks.getByName("check").dependsOn(tasks.withType<DetektCheckTask>())
