@@ -15,6 +15,10 @@ class ElasticMqPluginTest: BehaviorSpec({
             Then("The ElasticMQ Plugin should be applied") {
                 project.plugins.getPlugin(ElasticMqPlugin::class.java) shouldNotBe null
             }
+
+            Then("The elasticmq extension should be available") {
+                project.extensions.getByName("elasticmq") shouldNotBe null
+            }
         }
     }
 })
