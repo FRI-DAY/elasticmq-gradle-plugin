@@ -34,8 +34,22 @@ class ElasticMqPlugin: Plugin<Project> {
                 }
 
         project.extensions.add(EXTENSION_NAME, serverConfigurationContainer)
+        project.gradle.buildFinished {
+            project.elasticmq.forEach { serverConfiguration ->
+                serverConfiguration.ensureServerIsStopped()
+            }
+        }
     }
 }
+
+/**
+ * Extension property to easily retrieve the `elasticmq` extension.
+ */
+val Project.elasticmq: ServerConfigurationContainer
+    @Suppress("UNCHECKED_CAST")
+    get() = extensions.getByName(EXTENSION_NAME) as? ServerConfigurationContainer
+            ?: throw IllegalStateException("$EXTENSION_NAME is not of the correct type")
+
 
 /**
  * Extension method to easily configure the `elasticmq` extension.

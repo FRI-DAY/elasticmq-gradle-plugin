@@ -1,6 +1,9 @@
 package de.friday.gradle.elasticmq
 
 import groovy.lang.Closure
+import org.elasticmq.NodeAddress
+import org.elasticmq.rest.sqs.SQSRestServer
+import org.elasticmq.rest.sqs.SQSRestServerBuilder
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
@@ -13,7 +16,7 @@ private const val DEFAULT_PORT = 9324
  * Configuration for an ElasticMQ server instance.
  */
 class ServerConfiguration(
-        project: Project,
+        private val project: Project,
         val name: String
 ) {
 
@@ -82,6 +85,41 @@ class ServerConfiguration(
      */
     fun queues(config: Closure<Unit>) {
         queues.configure(config)
+    }
+
+    private var server: SQSRestServer? = null
+
+    @Synchronized
+    internal fun startServer() {
+        if (server != null) {
+            project.logger.warn("ElasticMQ $name server is already running")
+        } else {
+            project.logger.lifecycle("Starting ElasticMQ $name server")
+            server = SQSRestServerBuilder
+                    .withServerAddress(NodeAddress(
+                            protocol, host, port, contextPath
+                    ))
+                    .start()
+            server?.waitUntilStarted()
+        }
+    }
+
+    @Synchronized
+    internal fun stopServer() {
+        if (server == null) {
+            project.logger.warn("ElasticMQ $name server is already stopped")
+        } else {
+            project.logger.lifecycle("Stopping ElasticMQ $name server")
+            server?.stopAndWait()
+            server = null
+        }
+    }
+
+    @Synchronized
+    internal fun ensureServerIsStopped() {
+        if (server != null) {
+            stopServer()
+        }
     }
 }
 

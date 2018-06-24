@@ -32,7 +32,6 @@ class PluginUsageTest: BehaviorSpec({
             }
         """.trimIndent())
 
-
         When("The build file is executed") {
             val result = GradleRunner.create()
                     .withProjectDir(projectDir.toFile())
@@ -72,7 +71,6 @@ class PluginUsageTest: BehaviorSpec({
                 }
             }
         """.trimIndent())
-
 
         When("The build file is executed") {
             val result = GradleRunner.create()
