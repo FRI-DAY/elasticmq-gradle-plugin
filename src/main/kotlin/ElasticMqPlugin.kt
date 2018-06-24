@@ -25,6 +25,11 @@ private const val EXTENSION_NAME = "elasticmq"
  *     }
  * }
  * ```
+ *
+ * Tasks for starting and stopping each ElasticMQ server are automatically added
+ * to the build. For the previous example this means that `startLocalElasticMq`
+ * and `stopLocalElasticMq` tasks are automatically created. New tasks can be
+ * added by leveraging the [StartElasticMq] and [StopElasticMq] task types.
  */
 class ElasticMqPlugin: Plugin<Project> {
     override fun apply(project: Project) {
@@ -37,6 +42,20 @@ class ElasticMqPlugin: Plugin<Project> {
         project.gradle.buildFinished {
             project.elasticmq.forEach { serverConfiguration ->
                 serverConfiguration.ensureServerIsStopped()
+            }
+        }
+
+        serverConfigurationContainer.all { serverConfiguration ->
+            val name = serverConfiguration.name.capitalize()
+            val startName = "start${name}ElasticMq"
+            val stopName = "stop${name}ElasticMq"
+
+            project.tasks.create(startName, StartElasticMq::class.java) {
+                it.serverName = serverConfiguration.name
+            }
+
+            project.tasks.create(stopName, StopElasticMq::class.java) {
+                it.serverName = serverConfiguration.name
             }
         }
     }

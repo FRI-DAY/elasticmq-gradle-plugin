@@ -22,14 +22,6 @@ class TaskUsageTest: BehaviorSpec({
 
             elasticmq.create('local')
 
-            tasks.create('startLocalElasticMq', StartElasticMq) {
-                serverName = 'local'
-            }
-
-            tasks.create('stopLocalElasticMq', StopElasticMq) {
-                serverName = 'local'
-            }
-
             tasks.create('testTasks') {
                 dependsOn 'startLocalElasticMq'
                 finalizedBy 'stopLocalElasticMq'
@@ -68,19 +60,9 @@ class TaskUsageTest: BehaviorSpec({
 
             elasticmq.create("local")
 
-            val startLocalElasticMq =
-            tasks.create("startLocalElasticMq", StartElasticMq::class.java) {
-                serverName = "local"
-            }
-
-            val stopLocalElasticMq =
-            tasks.create("stopLocalElasticMq", StopElasticMq::class.java) {
-                serverName = "local"
-            }
-
             tasks.create("testTasks") {
-                dependsOn(startLocalElasticMq)
-                finalizedBy(stopLocalElasticMq)
+                dependsOn("startLocalElasticMq")
+                finalizedBy("stopLocalElasticMq")
             }
         """.trimIndent())
 
