@@ -1,5 +1,6 @@
 package de.friday.gradle.elasticmq
 
+import groovy.lang.Closure
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
@@ -11,8 +12,8 @@ private const val DEFAULT_PORT = 9324
 /**
  * Configuration for an ElasticMQ server instance.
  */
-data class ServerConfiguration(
-        private val project: Project,
+class ServerConfiguration(
+        project: Project,
         val name: String
 ) {
 
@@ -53,6 +54,35 @@ data class ServerConfiguration(
             portProperty.set(value as? Integer)
         }
         get() = portProperty.orNull as? Int ?: DEFAULT_PORT
+
+    val queues = project.container(QueueConfiguration::class.java) { name ->
+        QueueConfiguration(project, name)
+    }
+
+    /**
+     * Configures the queues associated to this ElasticMQ server instance.
+     *
+     * @param [config] lambda to configure the queues.
+     */
+    fun queues(config: QueueConfigurationContainer.() -> Unit) {
+        queues.configure(object: Closure<Unit>(this, this) {
+            fun doCall() {
+                @Suppress("UNCHECKED_CAST")
+                (delegate as? QueueConfigurationContainer)?.let {
+                    config(it)
+                }
+            }
+        })
+    }
+
+    /**
+     * Configures the queues associated to this ElasticMQ server instance.
+     *
+     * @param [config] Groovy closure to configure the queues.
+     */
+    fun queues(config: Closure<Unit>) {
+        queues.configure(config)
+    }
 }
 
 internal typealias ServerConfigurationContainer =

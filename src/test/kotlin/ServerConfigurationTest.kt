@@ -1,11 +1,8 @@
 package de.friday.gradle.elasticmq
 
-import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.BehaviorSpec
 import org.gradle.testfixtures.ProjectBuilder
-import org.gradle.testkit.runner.GradleRunner
-import java.nio.file.Files
 
 class ServerConfigurationTest: BehaviorSpec({
 
@@ -75,74 +72,6 @@ class ServerConfigurationTest: BehaviorSpec({
 
             Then("The lazy Port should have the set value") {
                 serverConfiguration.portProperty.get() shouldBe 101010
-            }
-        }
-    }
-
-    Given("A configured Gradle project (Groovy DSL)") {
-        val projectDir = Files.createTempDirectory("")
-        val buildScript = projectDir.resolve("build.gradle").toFile()
-        buildScript.writeText("""
-            plugins {
-                id 'de.friday.elasticmq'
-            }
-
-            elasticmq {
-                local {
-                    contextPath = "Mr. President"
-                    protocol = "Vengaboys"
-                    host = "Eiffel 65"
-                    port = -1
-                }
-            }
-        """.trimIndent())
-
-
-        When("The build file is executed") {
-            val result = GradleRunner.create()
-                    .withProjectDir(projectDir.toFile())
-                    .withPluginClasspath()
-                    .withArguments("--stacktrace")
-                    .build()
-
-            Then("The build should be successful") {
-                result.output should {
-                    it.contains("BUILD SUCCESSFUL")
-                }
-            }
-        }
-    }
-
-    Given("A configured Gradle project (Kotlin DSL)") {
-        val projectDir = Files.createTempDirectory("")
-        val buildScript = projectDir.resolve("build.gradle.kts").toFile()
-        buildScript.writeText("""
-            plugins {
-                id("de.friday.elasticmq")
-            }
-
-            elasticmq {
-                create("local") {
-                    contextPath = "Gigi D'Agostino"
-                    protocol = "Dr. Alban"
-                    host = "DJ Bobo"
-                    port = -1
-                }
-            }
-        """.trimIndent())
-
-
-        When("The build file is executed") {
-            val result = GradleRunner.create()
-                    .withProjectDir(projectDir.toFile())
-                    .withPluginClasspath()
-                    .withArguments("--stacktrace")
-                    .build()
-
-            Then("The build should be successful") {
-                result.output should {
-                    it.contains("BUILD SUCCESSFUL")
-                }
             }
         }
     }
