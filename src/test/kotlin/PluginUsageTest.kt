@@ -19,6 +19,7 @@ class PluginUsageTest: BehaviorSpec({
                 local {
                     contextPath = "Mr. President"
                     protocol = "Vengaboys"
+                    limits = "666"
                     host = "Eiffel 65"
                     port = -1
 
@@ -59,6 +60,7 @@ class PluginUsageTest: BehaviorSpec({
                 create("local") {
                     contextPath = "Gigi D'Agostino"
                     protocol = "Dr. Alban"
+                    limits = "Scooter"
                     host = "DJ Bobo"
                     port = -1
 

@@ -42,6 +42,22 @@ class ServerConfigurationTest: BehaviorSpec({
             }
         }
 
+        When("The lazy Limits are set") {
+            serverConfiguration.limitsProperty.set("Capella")
+
+            Then("The public Host should have the set value") {
+                serverConfiguration.limits shouldBe "Capella"
+            }
+        }
+
+        When("The public Limits are set") {
+            serverConfiguration.limits = "Basic Element"
+
+            Then("The lazy Host should have the set value") {
+                serverConfiguration.limitsProperty.get() shouldBe "Basic Element"
+            }
+        }
+
         When("The lazy Host is set") {
             serverConfiguration.hostProperty.set("Sin With Sebastian")
 
