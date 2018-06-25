@@ -1,5 +1,9 @@
 package de.friday.gradle.elasticmq
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider
+import com.amazonaws.auth.AnonymousAWSCredentials
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder
 import groovy.lang.Closure
 import org.elasticmq.NodeAddress
 import org.elasticmq.rest.sqs.SQSRestServer
@@ -7,6 +11,7 @@ import org.elasticmq.rest.sqs.SQSRestServerBuilder
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
+private const val ELASTICMQ_REGION = "elasticmq"
 private const val DEFAULT_CONTEXT_PATH = ""
 private const val DEFAULT_PROTOCOL = "http"
 private const val DEFAULT_HOST = "localhost"
@@ -31,7 +36,9 @@ class ServerConfiguration(
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     internal val portProperty =
-            project.objects.property(Integer::class.java)
+            project.objects.property(Integer::class.java).also {
+                it.set(DEFAULT_PORT as? Integer)
+            }
 
     var contextPath: String
         set(value) {
@@ -56,7 +63,7 @@ class ServerConfiguration(
             @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
             portProperty.set(value as? Integer)
         }
-        get() = portProperty.orNull as? Int ?: DEFAULT_PORT
+        get() = portProperty.get().toInt()
 
     val queues = project.container(QueueConfiguration::class.java) { name ->
         QueueConfiguration(project, name)
@@ -101,6 +108,7 @@ class ServerConfiguration(
                     ))
                     .start()
             server?.waitUntilStarted()
+            createQueues()
         }
     }
 
@@ -121,6 +129,27 @@ class ServerConfiguration(
             stopServer()
         }
     }
+
+    private fun createQueues() {
+        val client = createServerClient()
+
+        queues.forEach { queueConfiguration ->
+            val queue = queueConfiguration.name
+            val queueUrl = client.createQueue(queue).queueUrl
+            client.setQueueAttributes(queueUrl, queueConfiguration.attributes)
+        }
+
+        client.shutdown()
+    }
+
+    internal fun createServerClient() = AmazonSQSClientBuilder
+            .standard()
+            .withCredentials(
+                    AWSStaticCredentialsProvider(AnonymousAWSCredentials()))
+            .withEndpointConfiguration(EndpointConfiguration(
+                    "$protocol://$host:$port",
+                    ELASTICMQ_REGION))
+            .build()
 }
 
 internal typealias ServerConfigurationContainer =
