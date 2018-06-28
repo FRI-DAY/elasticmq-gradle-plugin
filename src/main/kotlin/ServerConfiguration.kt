@@ -27,54 +27,54 @@ class ServerConfiguration(
         val name: String
 ) {
 
-    internal val contextPathProperty =
+    internal val lazyContextPath =
             project.objects.property(String::class.java)
 
-    internal val protocolProperty =
+    internal val lazyProtocol =
             project.objects.property(String::class.java)
 
-    internal val limitsProperty =
+    internal val lazyLimits =
             project.objects.property(String::class.java)
 
-    internal val hostProperty =
+    internal val lazyHost =
             project.objects.property(String::class.java)
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-    internal val portProperty =
+    internal val lazyPort =
             project.objects.property(Integer::class.java).also {
                 it.set(DEFAULT_PORT as? Integer)
             }
 
     var contextPath: String
         set(value) {
-            contextPathProperty.set(value)
+            lazyContextPath.set(value)
         }
-        get() = contextPathProperty.getOrElse(DEFAULT_CONTEXT_PATH)
+        get() = lazyContextPath.getOrElse(DEFAULT_CONTEXT_PATH)
 
     var protocol: String
         set(value) {
-            protocolProperty.set(value)
+            lazyProtocol.set(value)
         }
-        get() = protocolProperty.getOrElse(DEFAULT_PROTOCOL)
+        get() = lazyProtocol.getOrElse(DEFAULT_PROTOCOL)
 
     var limits: String
         set(value) {
-            limitsProperty.set(value)
+            lazyLimits.set(value)
         }
-        get() = limitsProperty.getOrElse(DEFAULT_LIMITS)
+        get() = lazyLimits.getOrElse(DEFAULT_LIMITS)
 
     var host: String
         set(value) {
-            hostProperty.set(value)
+            lazyHost.set(value)
         }
-        get() = hostProperty.getOrElse(DEFAULT_HOST)
+        get() = lazyHost.getOrElse(DEFAULT_HOST)
 
     var port: Int
         set(value) {
             @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-            portProperty.set(value as? Integer)
+            lazyPort.set(value as? Integer)
         }
-        get() = portProperty.get().toInt()
+        get() = lazyPort.get().toInt()
 
     val queues = project.container(QueueConfiguration::class.java) { name ->
         QueueConfiguration(project, name)

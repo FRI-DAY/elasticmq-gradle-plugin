@@ -11,15 +11,15 @@ class QueueConfiguration(
         val name: String
 ) {
 
-    internal val attributesProperty =
+    internal val lazyAttributes =
             project.objects.property(MutableMap::class.java)
 
     var attributes: Map<String, String>
         set(value) {
-            attributesProperty.set(value.toMutableMap())
+            lazyAttributes.set(value.toMutableMap())
         }
         @Suppress("UNCHECKED_CAST")
-        get() = attributesProperty.orNull as? Map<String, String> ?: mapOf()
+        get() = lazyAttributes.orNull as? Map<String, String> ?: mapOf()
 
     /**
      * Adds an attribute to the queue configuration.
@@ -28,11 +28,11 @@ class QueueConfiguration(
      * @param [value] the value to set the attribute to
      */
     fun attribute(attribute: String, value: String) {
-        if (attributesProperty.orNull == null) {
-            attributesProperty.set(mutableMapOf<String, String>())
+        if (lazyAttributes.orNull == null) {
+            lazyAttributes.set(mutableMapOf<String, String>())
         }
         @Suppress("UNCHECKED_CAST")
-        val map = attributesProperty.get() as? MutableMap<String, String>
+        val map = lazyAttributes.get() as? MutableMap<String, String>
         map?.put(attribute, value)
     }
 }

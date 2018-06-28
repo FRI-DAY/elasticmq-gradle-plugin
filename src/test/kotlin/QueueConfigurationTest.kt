@@ -9,7 +9,7 @@ class QueueConfigurationTest: WordSpec({
     "Attributes" should {
         "Be correctly returned by the property if lazily set" {
             val config = queueConfiguration()
-            config.attributesProperty.set(mutableMapOf(
+            config.lazyAttributes.set(mutableMapOf(
                     "attribute" to "value-1"
             ))
 
@@ -22,7 +22,7 @@ class QueueConfigurationTest: WordSpec({
                     "attribute" to "value-2"
             )
 
-            config.attributesProperty.get()["attribute"] shouldBe "value-2"
+            config.lazyAttributes.get()["attribute"] shouldBe "value-2"
         }
 
         "Be empty by default" {

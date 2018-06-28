@@ -13,7 +13,7 @@ class ServerConfigurationTest: WordSpec({
     "Context Path" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
-            config.contextPathProperty.set("context-1")
+            config.lazyContextPath.set("context-1")
 
             config.contextPath shouldBe "context-1"
         }
@@ -22,7 +22,7 @@ class ServerConfigurationTest: WordSpec({
             val config = serverConfiguration()
             config.contextPath = "context-2"
 
-            config.contextPathProperty.get() shouldBe "context-2"
+            config.lazyContextPath.get() shouldBe "context-2"
         }
 
         "Be empty by default" {
@@ -33,7 +33,7 @@ class ServerConfigurationTest: WordSpec({
     "Protocol" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
-            config.protocolProperty.set("protocol-1")
+            config.lazyProtocol.set("protocol-1")
 
             config.protocol shouldBe "protocol-1"
         }
@@ -42,7 +42,7 @@ class ServerConfigurationTest: WordSpec({
             val config = serverConfiguration()
             config.protocol = "protocol-2"
 
-            config.protocolProperty.get() shouldBe "protocol-2"
+            config.lazyProtocol.get() shouldBe "protocol-2"
         }
 
         "Be 'http' by default" {
@@ -53,7 +53,7 @@ class ServerConfigurationTest: WordSpec({
     "Limits" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
-            config.limitsProperty.set("limits-1")
+            config.lazyLimits.set("limits-1")
 
             config.limits shouldBe "limits-1"
         }
@@ -62,7 +62,7 @@ class ServerConfigurationTest: WordSpec({
             val config = serverConfiguration()
             config.limits = "limits-2"
 
-            config.limitsProperty.get() shouldBe "limits-2"
+            config.lazyLimits.get() shouldBe "limits-2"
         }
 
         "Be 'strict' by default" {
@@ -105,7 +105,7 @@ class ServerConfigurationTest: WordSpec({
     "Host" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
-            config.hostProperty.set("host-1")
+            config.lazyHost.set("host-1")
 
             config.host shouldBe "host-1"
         }
@@ -114,7 +114,7 @@ class ServerConfigurationTest: WordSpec({
             val config = serverConfiguration()
             config.host = "host-2"
 
-            config.hostProperty.get() shouldBe "host-2"
+            config.lazyHost.get() shouldBe "host-2"
         }
 
         "Be 'localhost' by default" {
@@ -126,7 +126,7 @@ class ServerConfigurationTest: WordSpec({
     "Port" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
-            config.portProperty.set(1234 as? Integer)
+            config.lazyPort.set(1234 as? Integer)
 
             config.port shouldBe 1234
         }
@@ -135,7 +135,7 @@ class ServerConfigurationTest: WordSpec({
             val config = serverConfiguration()
             config.port = 4321
 
-            config.portProperty.get() shouldBe 4321
+            config.lazyPort.get() shouldBe 4321
         }
 
         "Be '9324' by default" {
