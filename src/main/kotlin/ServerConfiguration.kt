@@ -114,8 +114,11 @@ class ServerConfiguration(
     private var server: SQSRestServer? = null
 
     @Synchronized
+    internal fun serverIsRunning() = server != null
+
+    @Synchronized
     internal fun startServer() {
-        if (server != null) {
+        if (serverIsRunning()) {
             project.logger.warn("ElasticMQ $name server is already running")
         } else {
             project.logger.lifecycle("Starting ElasticMQ $name server")
@@ -132,7 +135,7 @@ class ServerConfiguration(
 
     @Synchronized
     internal fun stopServer() {
-        if (server == null) {
+        if (!serverIsRunning()) {
             project.logger.warn("ElasticMQ $name server is already stopped")
         } else {
             project.logger.lifecycle("Stopping ElasticMQ $name server")
@@ -143,7 +146,7 @@ class ServerConfiguration(
 
     @Synchronized
     internal fun ensureServerIsStopped() {
-        if (server != null) {
+        if (serverIsRunning()) {
             stopServer()
         }
     }
