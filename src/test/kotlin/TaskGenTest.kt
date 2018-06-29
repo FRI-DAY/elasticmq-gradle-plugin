@@ -47,7 +47,7 @@ class TaskGenTest: WordSpec({
         arrayOf(
                 '-', '_', '$', 'à', 'á', 'â', 'ã', 'ä', 'ç', 'è', 'é', 'ê', 'ë',
                 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'š', 'ù', 'ú',
-                'û', 'ü', 'ý', 'ÿ', 'ž'
+                'û', 'ü', 'ý', 'ÿ', 'ž', "\uD83D\uDE01"
         ).forEach { c ->
             "Treat '$c' as space" {
                 val project = project(name = "another${c}example")
