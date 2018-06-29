@@ -12,17 +12,17 @@ class TasksTest: WordSpec({
         "Start a stopped server" { withProject { project, config ->
             project.tasks.withType(StartElasticMq::class.java).single().doAction()
 
-            config.serverIsRunning() shouldBe true
+            config.server.isRunning() shouldBe true
             canConnect(config) shouldBe true
         }}
     }
 
     "Stop ElasticMQ Server Task" should {
         "Stop a running server" { withProject { project, config ->
-            config.startServer()
+            config.server.start()
             project.tasks.withType(StopElasticMq::class.java).single().doAction()
 
-            config.serverIsRunning() shouldBe false
+            config.server.isRunning() shouldBe false
             canConnect(config) shouldBe false
         }}
     }
@@ -35,7 +35,7 @@ private fun withProject(test: (Project, ServerConfiguration) -> Unit) {
     try {
         test(project, config)
     } finally {
-        config.ensureServerIsStopped()
+        config.server.ensureIsStopped()
     }
 }
 
@@ -45,7 +45,7 @@ private fun project() = ProjectBuilder.builder().build().also {
 }
 
 private fun canConnect(config: ServerConfiguration) = try {
-    config.createServerClient().createQueue("queue").queueUrl
+    config.createClient().createQueue("queue").queueUrl
     true
 } catch (e: SdkClientException) {
     false

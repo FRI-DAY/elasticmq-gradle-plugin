@@ -5,10 +5,7 @@ import com.amazonaws.auth.AnonymousAWSCredentials
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder
 import groovy.lang.Closure
-import org.elasticmq.NodeAddress
 import org.elasticmq.rest.sqs.SQSLimits
-import org.elasticmq.rest.sqs.SQSRestServer
-import org.elasticmq.rest.sqs.SQSRestServerBuilder
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
@@ -111,59 +108,9 @@ class ServerConfiguration(
         queues.configure(config)
     }
 
-    private var server: SQSRestServer? = null
+    internal var server = Server(project, this)
 
-    @Synchronized
-    internal fun serverIsRunning() = server != null
-
-    @Synchronized
-    internal fun startServer() {
-        if (serverIsRunning()) {
-            project.logger.warn("ElasticMQ $name server is already running")
-        } else {
-            project.logger.lifecycle("Starting ElasticMQ $name server")
-            server = SQSRestServerBuilder
-                    .withSQSLimits(getSqsLimits())
-                    .withServerAddress(NodeAddress(
-                            protocol, host, port, contextPath
-                    ))
-                    .start()
-            server?.waitUntilStarted()
-            createQueues()
-        }
-    }
-
-    @Synchronized
-    internal fun stopServer() {
-        if (!serverIsRunning()) {
-            project.logger.warn("ElasticMQ $name server is already stopped")
-        } else {
-            project.logger.lifecycle("Stopping ElasticMQ $name server")
-            server?.stopAndWait()
-            server = null
-        }
-    }
-
-    @Synchronized
-    internal fun ensureServerIsStopped() {
-        if (serverIsRunning()) {
-            stopServer()
-        }
-    }
-
-    private fun createQueues() {
-        val client = createServerClient()
-
-        queues.forEach { queueConfiguration ->
-            val queue = queueConfiguration.name
-            val queueUrl = client.createQueue(queue).queueUrl
-            client.setQueueAttributes(queueUrl, queueConfiguration.attributes)
-        }
-
-        client.shutdown()
-    }
-
-    internal fun createServerClient() = AmazonSQSClientBuilder
+    internal fun createClient() = AmazonSQSClientBuilder
             .standard()
             .withCredentials(
                     AWSStaticCredentialsProvider(AnonymousAWSCredentials()))

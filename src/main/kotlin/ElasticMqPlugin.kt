@@ -42,7 +42,7 @@ class ElasticMqPlugin: Plugin<Project> {
         project.extensions.add(EXTENSION_NAME, serverConfigurationContainer)
         project.gradle.buildFinished {
             project.elasticmq.forEach { serverConfiguration ->
-                serverConfiguration.ensureServerIsStopped()
+                serverConfiguration.server.ensureIsStopped()
             }
         }
 
