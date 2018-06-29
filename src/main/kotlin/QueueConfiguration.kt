@@ -11,6 +11,12 @@ class QueueConfiguration(
         val name: String
 ) {
 
+    init {
+        if (name.isBlank()) {
+            throw IllegalArgumentException("Name must not be blank nor empty")
+        }
+    }
+
     internal val lazyAttributes =
             project.objects.property(MutableMap::class.java)
 

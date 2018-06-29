@@ -10,6 +10,20 @@ import org.gradle.testfixtures.ProjectBuilder
 
 class ServerConfigurationTest: WordSpec({
 
+    "Server Configuration" should {
+        "Not accept an empty name" {
+            shouldThrow<IllegalArgumentException> {
+                serverConfiguration(name = "")
+            }
+        }
+
+        "Not accept a blank name" {
+            shouldThrow<IllegalArgumentException> {
+                serverConfiguration(name = " \t \n ")
+            }
+        }
+    }
+
     "Context Path" should {
         "Be correctly returned by the property if lazily set" {
             val config = serverConfiguration()
@@ -151,6 +165,6 @@ class ServerConfigurationTest: WordSpec({
 
 })
 
-private fun serverConfiguration() = ProjectBuilder.builder().build().let {
-    ServerConfiguration(it, "sampleConfiguration")
+private fun serverConfiguration(name: String = "sample") = ProjectBuilder.builder().build().let {
+    ServerConfiguration(it, name)
 }

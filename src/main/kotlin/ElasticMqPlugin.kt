@@ -3,6 +3,7 @@ package de.friday.gradle.elasticmq
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.util.GUtil
 
 private const val EXTENSION_NAME = "elasticmq"
 
@@ -46,7 +47,7 @@ class ElasticMqPlugin: Plugin<Project> {
         }
 
         serverConfigurationContainer.all { serverConfiguration ->
-            val name = serverConfiguration.name.capitalize()
+            val name = convertToTaskName(serverConfiguration.name)
             val startName = "start${name}ElasticMq"
             val stopName = "stop${name}ElasticMq"
 
@@ -76,3 +77,14 @@ val Project.elasticmq: ServerConfigurationContainer
 fun Project.elasticmq(config: Action<ServerConfigurationContainer>.() -> Unit) {
     extensions.configure(EXTENSION_NAME, config)
 }
+
+internal fun convertToTaskName(name: String) =
+        name.toLowerCase()
+            .map { if (isValidTaskNameCharacter(it)) it else ' ' }
+            .joinToString(separator = "")
+            .toCamelCase()
+
+private fun isValidTaskNameCharacter(char: Char) =
+        char != '_' && Character.isJavaIdentifierPart(char)
+
+private fun String.toCamelCase() = GUtil.toCamelCase(this)

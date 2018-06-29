@@ -27,6 +27,12 @@ class ServerConfiguration(
         val name: String
 ) {
 
+    init {
+        if (name.isBlank()) {
+            throw IllegalArgumentException("Name must not be blank nor empty")
+        }
+    }
+
     internal val lazyContextPath =
             project.objects.property(String::class.java)
 
