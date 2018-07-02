@@ -74,7 +74,7 @@ val Project.elasticmq: ServerConfigurationContainer
 /**
  * Extension method to easily configure the `elasticmq` extension.
  */
-fun Project.elasticmq(config: Action<ServerConfigurationContainer>.() -> Unit) {
+fun Project.elasticmq(config: Action<ServerConfigurationContainer>) {
     extensions.configure(EXTENSION_NAME, config)
 }
 
