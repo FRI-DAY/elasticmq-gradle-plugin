@@ -5,7 +5,7 @@ group = "de.friday"
 version = "1.0-SNAPSHOT"
 
 plugins {
-    kotlin("jvm") version "1.2.50"
+    kotlin("jvm") version "1.2.61"
     id("java-gradle-plugin")
     id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
     id("com.github.ben-manes.versions") version "0.20.0"
@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib", "1.2.50"))
+    implementation(kotlin("stdlib", "1.2.61"))
     implementation("com.amazonaws:aws-java-sdk-sqs:1.11.391")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.1")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
