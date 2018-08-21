@@ -1,7 +1,7 @@
 ---
 
 build:
-  image: openjdk:8u171-jdk-alpine3.7
+  image: openjdk:8u171-jdk-alpine3.8
   script:
     - export GRADLE_USER_HOME=$(pwd)/.gradle
     - ./gradlew --no-daemon build
