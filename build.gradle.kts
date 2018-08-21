@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib", "1.2.50"))
-    implementation("com.amazonaws:aws-java-sdk-sqs:1.11.349")
+    implementation("com.amazonaws:aws-java-sdk-sqs:1.11.391")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.1")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.7")
 }
