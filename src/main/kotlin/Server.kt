@@ -9,6 +9,7 @@ internal class Server(
         private val project: Project,
         val config: ServerConfiguration
 ) {
+    @Volatile
     private var sqsRestServer: SQSRestServer? = null
 
     @Synchronized
