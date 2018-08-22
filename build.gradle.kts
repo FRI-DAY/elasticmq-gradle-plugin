@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import io.gitlab.arturbosch.detekt.DetektCheckTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -9,6 +10,7 @@ plugins {
     id("java-gradle-plugin")
     id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
     id("com.github.ben-manes.versions") version "0.20.0"
+    id("com.github.johnrengelman.shadow") version "2.0.4"
 }
 
 repositories {
@@ -46,4 +48,8 @@ detekt {
         config = file("detekt.yml")
         input = "src"
     })
+}
+
+tasks.withType<ShadowJar>() {
+    mergeServiceFiles("*.conf")
 }
