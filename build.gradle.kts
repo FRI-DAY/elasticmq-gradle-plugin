@@ -1,6 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import io.gitlab.arturbosch.detekt.DetektCheckTask
+import org.gradle.internal.os.OperatingSystem
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.OutputStream
 
 group = "de.friday"
 version = "1.0-SNAPSHOT"
@@ -32,8 +34,6 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.allWarningsAsErrors = true
 }
 
-tasks.getByName("check").dependsOn(tasks.withType<DetektCheckTask>())
-
 gradlePlugin {
     plugins {
         create("elasticmq") {
@@ -52,4 +52,41 @@ detekt {
 
 tasks.withType<ShadowJar>() {
     mergeServiceFiles("*.conf")
+}
+
+val copyIntegrationTestGroovy = task("copyIntegrationTestGroovy", Copy::class) {
+    val shadowJar = tasks.getByName("shadowJar")
+    dependsOn(shadowJar)
+    from(shadowJar.outputs) {
+        rename("elasticmq-gradle-plugin.*.jar", "libs/elasticmq-gradle-plugin.jar")
+    }
+
+    from(projectDir) {
+        include("gradle/**")
+        include("gradlew")
+        include("gradlew.bat")
+    }
+
+    from(file("integration-test"))
+    into("$buildDir/integrationTests/groovy-dsl")
+}
+
+val integrationTestGroovy = task("integrationTestGroovy", Exec::class) {
+    dependsOn(copyIntegrationTestGroovy)
+    workingDir = copyIntegrationTestGroovy.destinationDir
+    standardOutput = object: OutputStream() {
+        override fun write(ignored: Int) { }
+    }
+
+    args("build")
+    if (OperatingSystem.current().isWindows()) {
+        commandLine("cmd", "/c", "gradlew.bat")
+    } else {
+        commandLine("./gradlew")
+    }
+}
+
+tasks.getByName("check") {
+    dependsOn(tasks.withType<DetektCheckTask>())
+    dependsOn(integrationTestGroovy)
 }
