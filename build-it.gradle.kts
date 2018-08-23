@@ -4,9 +4,14 @@ import java.io.OutputStream
 val integrationTestGroovy = createIntegrationTestTask("groovy", "build.gradle")
 val integrationTestKotlin = createIntegrationTestTask("kotlin", "build.gradle.kts")
 
-tasks.getByName("check") {
+val integrationTests = task("integrationTests") {
     dependsOn(integrationTestGroovy)
     dependsOn(integrationTestKotlin)
+    mustRunAfter(tasks.getByName("test"))
+}
+
+tasks.getByName("check") {
+    dependsOn(integrationTests)
 }
 
 fun createIntegrationTestTask(dsl: String, script: String): Task {
@@ -14,7 +19,7 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
         val shadowJar = tasks.getByName("shadowJar")
         dependsOn(shadowJar)
         from(shadowJar.outputs) {
-            rename("elasticmq-gradle-plugin.*.jar", "libs/elasticmq-gradle-plugin.jar")
+            rename("(.*)-all.jar", "libs/$1.jar")
         }
 
         from(projectDir) {
@@ -48,7 +53,5 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
         } else {
             args("build")
         }
-
-        mustRunAfter(tasks.getByName("test"))
     }
 }

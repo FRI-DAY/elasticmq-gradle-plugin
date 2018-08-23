@@ -1,18 +1,8 @@
 
-buildscript {
-    repositories {
-        flatDir dirs: [ 'libs' ]
-    }
-    dependencies {
-        classpath name: 'elasticmq-gradle-plugin'
-    }
-}
-
 plugins {
     id 'java'
+    id 'de.friday.elasticmq' version '0.1.0'
 }
-
-apply plugin: 'de.friday.elasticmq'
 
 repositories {
     jcenter()

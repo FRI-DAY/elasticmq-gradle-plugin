@@ -62,5 +62,5 @@ class TaskGenTest: WordSpec({
 
 private fun project(name: String) = ProjectBuilder.builder().build().also {
     it.pluginManager.apply(ElasticMqPlugin::class.java)
-    it.elasticmq.instances.create(name)
+    it.elasticmq().instances.create(name)
 }

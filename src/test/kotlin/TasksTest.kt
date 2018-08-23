@@ -31,7 +31,7 @@ class TasksTest: WordSpec({
 
 private fun withProject(test: (Project, ServerInstanceConfiguration) -> Unit) {
     val project = project()
-    val config = project.elasticmq.instances.single()
+    val config = project.elasticmq().instances.single()
     try {
         test(project, config)
     } finally {
@@ -41,7 +41,7 @@ private fun withProject(test: (Project, ServerInstanceConfiguration) -> Unit) {
 
 private fun project() = ProjectBuilder.builder().build().also {
     it.pluginManager.apply(ElasticMqPlugin::class.java)
-    it.elasticmq.instances.create("local")
+    it.elasticmq().instances.create("local")
 }
 
 private fun canConnect(config: ServerInstanceConfiguration) = try {

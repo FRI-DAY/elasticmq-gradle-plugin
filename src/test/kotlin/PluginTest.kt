@@ -20,7 +20,7 @@ class PluginTest: WordSpec({
             val project = ProjectBuilder.builder().build()
             project.pluginManager.apply(ElasticMqPlugin::class.java)
 
-            project.elasticmq shouldNotBe null
+            project.elasticmq() shouldNotBe null
         }
     }
 

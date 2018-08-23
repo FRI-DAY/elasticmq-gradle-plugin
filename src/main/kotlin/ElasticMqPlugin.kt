@@ -64,21 +64,10 @@ class ElasticMqPlugin: Plugin<Project> {
     }
 }
 
-/**
- * Extension property to easily retrieve the `elasticmq` extension.
- */
-val Project.elasticmq: ElasticMqExtension
+internal fun Project.elasticmq(): ElasticMqExtension =
     @Suppress("UNCHECKED_CAST")
-    get() = extensions.getByName(EXTENSION_NAME) as? ElasticMqExtension
-            ?: throw IllegalStateException("$EXTENSION_NAME is not of the correct type")
-
-
-/**
- * Extension method to easily configure the `elasticmq` extension.
- */
-fun Project.elasticmq(config: ElasticMqExtension.() -> Unit) {
-    elasticmq.config()
-}
+    extensions.getByName(EXTENSION_NAME) as? ElasticMqExtension
+    ?: throw IllegalStateException("$EXTENSION_NAME is not of the correct type")
 
 internal fun convertToTaskName(name: String) =
         name.toLowerCase()

@@ -1,22 +1,7 @@
-import de.friday.gradle.elasticmq.elasticmq
-
-buildscript {
-    repositories {
-        flatDir {
-            dirs("libs")
-        }
-    }
-    dependencies {
-        classpath(":elasticmq-gradle-plugin:")
-    }
-}
 
 plugins {
     id("java")
-}
-
-apply {
-    plugin("de.friday.elasticmq")
+    id("de.friday.elasticmq") version "0.1.0"
 }
 
 repositories {
