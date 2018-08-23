@@ -30,17 +30,19 @@ tasks.test {
 }
 
 elasticmq {
-    local {
-        protocol = 'http'
-        host = 'localhost'
-        port = 9324
-        contextPath = 'path'
+    instances {
+        local {
+            protocol = 'http'
+            host = 'localhost'
+            port = 9324
+            contextPath = 'path'
 
-        limits = 'relaxed'
+            limits = 'relaxed'
 
-        queues {
-            sample {
-                attribute 'DelaySeconds', '0'
+            queues {
+                sample {
+                    attribute 'DelaySeconds', '0'
+                }
             }
         }
     }

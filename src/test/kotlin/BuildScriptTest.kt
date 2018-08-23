@@ -19,18 +19,20 @@ class BuildScriptTest: WordSpec({
                 }
 
                 elasticmq {
-                    local {
-                        protocol = 'http'
-                        host = 'localhost'
-                        port = 9324
-                        contextPath = 'path'
+                    instances {
+                        local {
+                            protocol = 'http'
+                            host = 'localhost'
+                            port = 9324
+                            contextPath = 'path'
 
-                        limits = 'relaxed'
+                            limits = 'relaxed'
 
-                        queues {
-                            sample {
-                                attributes = [ DelaySeconds: '5' ]
-                                attribute 'VisibilityTimeout', '6000'
+                            queues {
+                                sample {
+                                    attributes = [ DelaySeconds: '5' ]
+                                    attribute 'VisibilityTimeout', '6000'
+                                }
                             }
                         }
                     }
@@ -69,18 +71,20 @@ class BuildScriptTest: WordSpec({
                 }
 
                 elasticmq {
-                    create("local") {
-                        protocol = "http"
-                        host = "localhost"
-                        port = 9324
-                        contextPath = "path"
+                    instances {
+                        create("local") {
+                            protocol = "http"
+                            host = "localhost"
+                            port = 9324
+                            contextPath = "path"
 
-                        limits = "relaxed"
+                            limits = "relaxed"
 
-                        queues {
-                            create("sample") {
-                                attributes = mapOf("DelaySeconds" to "5")
-                                attribute("VisibilityTimeout", "6000")
+                            queues {
+                                create("sample") {
+                                    attributes = mapOf("DelaySeconds" to "5")
+                                    attribute("VisibilityTimeout", "6000")
+                                }
                             }
                         }
                     }
@@ -119,9 +123,11 @@ class BuildScriptTest: WordSpec({
                 }
 
                 elasticmq {
-                    local {
-                        queues {
-                            sample { }
+                    instances {
+                        local {
+                            queues {
+                                sample { }
+                            }
                         }
                     }
                 }

@@ -35,17 +35,19 @@ tasks.withType<Test> {
 }
 
 elasticmq {
-    create("local") {
-        protocol = "http"
-        host = "localhost"
-        port = 9324
-        contextPath = "path"
+    instances {
+        create("local") {
+            protocol = "http"
+            host = "localhost"
+            port = 9324
+            contextPath = "path"
 
-        limits = "relaxed"
+            limits = "relaxed"
 
-        queues {
-            create("sample") {
-                attribute("DelaySeconds", "0")
+            queues {
+                create("sample") {
+                    attribute("DelaySeconds", "0")
+                }
             }
         }
     }
