@@ -36,7 +36,7 @@ gradlePlugin {
 detekt {
     defaultProfile(Action {
         config = file("detekt.yml")
-        input = "src"
+        input = "$projectDir/src"
     })
 }
 
