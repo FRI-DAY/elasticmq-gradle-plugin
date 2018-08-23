@@ -109,4 +109,38 @@ class BuildScriptTest: WordSpec({
         }
     }
 
+    "A builscript that doesn't stop the server explicitly" should {
+        "Stop the server implicitly after the build" {
+            val projectDir = Files.createTempDirectory("")
+            val buildScript = projectDir.resolve("build.gradle").toFile()
+            buildScript.writeText("""
+                plugins {
+                    id 'de.friday.elasticmq'
+                }
+
+                elasticmq {
+                    local {
+                        queues {
+                            sample { }
+                        }
+                    }
+                }
+            """.trimIndent())
+
+            val result = GradleRunner.create()
+                    .withProjectDir(projectDir.toFile())
+                    .withPluginClasspath()
+                    .withArguments("startLocalElasticMq", "--stacktrace")
+                    .build()
+
+            result.task(":startLocalElasticMq") should {
+                it != null && it.outcome == TaskOutcome.SUCCESS
+            }
+            result.task(":stopLocalElasticMq") should {
+                it != null && it.outcome == TaskOutcome.SKIPPED
+            }
+            result.output.shouldContain("Starting ElasticMQ local server")
+            result.output.shouldContain("Stopping ElasticMQ local server")
+        }
+    }
 })
