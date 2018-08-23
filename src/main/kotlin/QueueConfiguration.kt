@@ -17,15 +17,7 @@ class QueueConfiguration(
         }
     }
 
-    internal val lazyAttributes =
-            project.objects.property(MutableMap::class.java)
-
-    var attributes: Map<String, String>
-        set(value) {
-            lazyAttributes.set(value.toMutableMap())
-        }
-        @Suppress("UNCHECKED_CAST")
-        get() = lazyAttributes.orNull as? Map<String, String> ?: mapOf()
+    var attributes by GradleProperty(project, MutableMap::class.java, mutableMapOf<String, String>())
 
     /**
      * Adds an attribute to the queue configuration.
@@ -34,11 +26,8 @@ class QueueConfiguration(
      * @param [value] the value to set the attribute to
      */
     fun attribute(attribute: String, value: String) {
-        if (lazyAttributes.orNull == null) {
-            lazyAttributes.set(mutableMapOf<String, String>())
-        }
         @Suppress("UNCHECKED_CAST")
-        val map = lazyAttributes.get() as? MutableMap<String, String>
+        val map = attributes as? MutableMap<String, String>
         map?.put(attribute, value)
     }
 }

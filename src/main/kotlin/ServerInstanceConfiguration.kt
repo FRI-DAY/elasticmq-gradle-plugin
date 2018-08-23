@@ -30,54 +30,15 @@ class ServerInstanceConfiguration(
         }
     }
 
-    internal val lazyContextPath =
-            project.objects.property(String::class.java)
+    var contextPath by GradleProperty(project, String::class.java, DEFAULT_CONTEXT_PATH)
 
-    internal val lazyProtocol =
-            project.objects.property(String::class.java)
+    var protocol by GradleProperty(project, String::class.java, DEFAULT_PROTOCOL)
 
-    internal val lazyLimits =
-            project.objects.property(String::class.java)
+    var limits by GradleProperty(project, String::class.java, DEFAULT_LIMITS)
 
-    internal val lazyHost =
-            project.objects.property(String::class.java)
+    var host by GradleProperty(project, String::class.java, DEFAULT_HOST)
 
-    @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-    internal val lazyPort =
-            project.objects.property(Integer::class.java).also {
-                it.set(DEFAULT_PORT as? Integer)
-            }
-
-    var contextPath: String
-        set(value) {
-            lazyContextPath.set(value)
-        }
-        get() = lazyContextPath.getOrElse(DEFAULT_CONTEXT_PATH)
-
-    var protocol: String
-        set(value) {
-            lazyProtocol.set(value)
-        }
-        get() = lazyProtocol.getOrElse(DEFAULT_PROTOCOL)
-
-    var limits: String
-        set(value) {
-            lazyLimits.set(value)
-        }
-        get() = lazyLimits.getOrElse(DEFAULT_LIMITS)
-
-    var host: String
-        set(value) {
-            lazyHost.set(value)
-        }
-        get() = lazyHost.getOrElse(DEFAULT_HOST)
-
-    var port: Int
-        set(value) {
-            @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-            lazyPort.set(value as? Integer)
-        }
-        get() = lazyPort.get().toInt()
+    var port by GradleIntProperty(project, DEFAULT_PORT)
 
     val queues = project.container(QueueConfiguration::class.java) { name ->
         QueueConfiguration(project, name)

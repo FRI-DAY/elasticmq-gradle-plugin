@@ -22,24 +22,6 @@ class QueueConfigurationTest: WordSpec({
     }
 
     "Attributes" should {
-        "Be correctly returned by the property if lazily set" {
-            val config = queueConfiguration()
-            config.lazyAttributes.set(mutableMapOf(
-                    "attribute" to "value-1"
-            ))
-
-            config.attributes["attribute"] shouldBe "value-1"
-        }
-
-        "Be correctly returned lazily if set in the property" {
-            val config = queueConfiguration()
-            config.attributes = mapOf(
-                    "attribute" to "value-2"
-            )
-
-            config.lazyAttributes.get()["attribute"] shouldBe "value-2"
-        }
-
         "Be empty by default" {
             queueConfiguration().attributes.size shouldBe 0
         }

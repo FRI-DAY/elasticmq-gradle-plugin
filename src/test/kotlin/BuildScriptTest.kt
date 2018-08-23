@@ -82,7 +82,7 @@ class BuildScriptTest: WordSpec({
 
                             queues {
                                 create("sample") {
-                                    attributes = mapOf("DelaySeconds" to "5")
+                                    attributes = mutableMapOf("DelaySeconds" to "5")
                                     attribute("VisibilityTimeout", "6000")
                                 }
                             }

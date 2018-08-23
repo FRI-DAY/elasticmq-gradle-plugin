@@ -33,9 +33,12 @@ internal class ElasticMqInstance(
 
         val client = config.createClient()
         config.queues.forEach { queueConfiguration ->
-            val queue = queueConfiguration.name
-            val queueUrl = client.createQueue(queue).queueUrl
-            client.setQueueAttributes(queueUrl, queueConfiguration.attributes)
+            val queueUrl = client.createQueue(queueConfiguration.name).queueUrl
+
+            @Suppress("UNCHECKED_CAST")
+            client.setQueueAttributes(
+                    queueUrl,
+                    queueConfiguration.attributes as? Map<String, String>)
         }
         client.shutdown()
     }
