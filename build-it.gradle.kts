@@ -37,11 +37,16 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
             override fun write(ignored: Int) {}
         }
 
-        args("build")
         if (OperatingSystem.current().isWindows()) {
             commandLine("cmd", "/c", "gradlew.bat")
         } else {
             commandLine("./gradlew")
+        }
+
+        if (System.getenv("CI") == "true") {
+            args("build", "--no-daemon")
+        } else {
+            args("build")
         }
 
         mustRunAfter(tasks.getByName("test"))
