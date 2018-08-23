@@ -15,5 +15,5 @@ class ExtensionTest: WordSpec({
 })
 
 private fun extension() = ProjectBuilder.builder().build().let {
-    ElasticMqExtension(it.container(ServerConfiguration::class.java))
+    ElasticMqExtension(it.container(ServerInstanceConfiguration::class.java))
 }

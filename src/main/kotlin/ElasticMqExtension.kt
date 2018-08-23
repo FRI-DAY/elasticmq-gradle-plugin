@@ -6,7 +6,7 @@ import groovy.lang.Closure
  * Container for the custom ElasticMQ plugin configuration DSL.
  */
 open class ElasticMqExtension(
-       val instances: ServerConfigurationContainer
+       val instances: ServerInstanceConfigurationContainer
 ) {
 
     /**
@@ -14,11 +14,11 @@ open class ElasticMqExtension(
      *
      * @param [config] lambda to configure the server instances.
      */
-    fun instances(config: ServerConfigurationContainer.() -> Unit) {
+    fun instances(config: ServerInstanceConfigurationContainer.() -> Unit) {
         instances.configure(object: Closure<Unit>(this, this) {
             fun doCall() {
                 @Suppress("UNCHECKED_CAST")
-                (delegate as? ServerConfigurationContainer)?.let {
+                (delegate as? ServerInstanceConfigurationContainer)?.let {
                     config(it)
                 }
             }

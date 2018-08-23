@@ -12,30 +12,30 @@ class TasksTest: WordSpec({
         "Start a stopped server" { withProject { project, config ->
             project.tasks.withType(StartElasticMq::class.java).single().doAction()
 
-            config.server.isRunning() shouldBe true
+            config.elasticMqInstance.isRunning() shouldBe true
             canConnect(config) shouldBe true
         }}
     }
 
     "Stop ElasticMQ Server Task" should {
         "Stop a running server" { withProject { project, config ->
-            config.server.start()
+            config.elasticMqInstance.start()
             project.tasks.withType(StopElasticMq::class.java).single().doAction()
 
-            config.server.isRunning() shouldBe false
+            config.elasticMqInstance.isRunning() shouldBe false
             canConnect(config) shouldBe false
         }}
     }
 
 })
 
-private fun withProject(test: (Project, ServerConfiguration) -> Unit) {
+private fun withProject(test: (Project, ServerInstanceConfiguration) -> Unit) {
     val project = project()
     val config = project.elasticmq.instances.single()
     try {
         test(project, config)
     } finally {
-        config.server.ensureIsStopped()
+        config.elasticMqInstance.ensureIsStopped()
     }
 }
 
@@ -44,7 +44,7 @@ private fun project() = ProjectBuilder.builder().build().also {
     it.elasticmq.instances.create("local")
 }
 
-private fun canConnect(config: ServerConfiguration) = try {
+private fun canConnect(config: ServerInstanceConfiguration) = try {
     config.createClient().createQueue("queue").queueUrl
     true
 } catch (e: SdkClientException) {

@@ -8,9 +8,9 @@ import io.kotlintest.specs.WordSpec
 import org.elasticmq.rest.sqs.SQSLimits
 import org.gradle.testfixtures.ProjectBuilder
 
-class ServerConfigurationTest: WordSpec({
+class ServerInstanceConfigurationTest: WordSpec({
 
-    "Server Configuration" should {
+    "Server Instance Configuration" should {
         "Not accept an empty name" {
             shouldThrow<IllegalArgumentException> {
                 serverConfiguration(name = "")
@@ -166,5 +166,5 @@ class ServerConfigurationTest: WordSpec({
 })
 
 private fun serverConfiguration(name: String = "sample") = ProjectBuilder.builder().build().let {
-    ServerConfiguration(it, name)
+    ServerInstanceConfiguration(it, name)
 }

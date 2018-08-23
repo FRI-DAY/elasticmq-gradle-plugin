@@ -19,7 +19,7 @@ private const val DEFAULT_PORT = 9324
 /**
  * Configuration for an ElasticMQ server instance.
  */
-class ServerConfiguration(
+class ServerInstanceConfiguration(
         private val project: Project,
         val name: String
 ) {
@@ -108,7 +108,7 @@ class ServerConfiguration(
         queues.configure(config)
     }
 
-    internal var server = Server(project, this)
+    internal var elasticMqInstance = ElasticMqInstance(project, this)
 
     internal fun createClient() = AmazonSQSClientBuilder
             .standard()
@@ -127,5 +127,5 @@ class ServerConfiguration(
     }
 }
 
-internal typealias ServerConfigurationContainer =
-        NamedDomainObjectContainer<ServerConfiguration>
+internal typealias ServerInstanceConfigurationContainer =
+        NamedDomainObjectContainer<ServerInstanceConfiguration>

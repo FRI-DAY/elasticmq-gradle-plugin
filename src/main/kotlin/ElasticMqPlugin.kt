@@ -38,13 +38,13 @@ class ElasticMqPlugin: Plugin<Project> {
         val extension = project.extensions.create(
                 EXTENSION_NAME,
                 ElasticMqExtension::class.java,
-                project.container(ServerConfiguration::class.java) { name ->
-                    ServerConfiguration(project, name)
+                project.container(ServerInstanceConfiguration::class.java) { name ->
+                    ServerInstanceConfiguration(project, name)
                 })
 
         project.gradle.buildFinished {
             extension.instances.forEach { serverConfiguration ->
-                serverConfiguration.server.ensureIsStopped()
+                serverConfiguration.elasticMqInstance.ensureIsStopped()
             }
         }
 

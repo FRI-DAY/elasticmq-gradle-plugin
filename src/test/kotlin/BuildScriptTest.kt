@@ -56,8 +56,8 @@ class BuildScriptTest: WordSpec({
             result.task(":stopLocalElasticMq") should {
                 it != null && it.outcome == TaskOutcome.SUCCESS
             }
-            result.output.shouldContain("Starting ElasticMQ local server")
-            result.output.shouldContain("Stopping ElasticMQ local server")
+            result.output.shouldContain("Starting ElasticMQ local server instance")
+            result.output.shouldContain("Stopping ElasticMQ local server instance")
         }
     }
 
@@ -108,8 +108,8 @@ class BuildScriptTest: WordSpec({
             result.task(":stopLocalElasticMq") should {
                 it != null && it.outcome == TaskOutcome.SUCCESS
             }
-            result.output.shouldContain("Starting ElasticMQ local server")
-            result.output.shouldContain("Stopping ElasticMQ local server")
+            result.output.shouldContain("Starting ElasticMQ local server instance")
+            result.output.shouldContain("Stopping ElasticMQ local server instance")
         }
     }
 
@@ -145,8 +145,8 @@ class BuildScriptTest: WordSpec({
             result.task(":stopLocalElasticMq") should {
                 it != null && it.outcome == TaskOutcome.SKIPPED
             }
-            result.output.shouldContain("Starting ElasticMQ local server")
-            result.output.shouldContain("Stopping ElasticMQ local server")
+            result.output.shouldContain("Starting ElasticMQ local server instance")
+            result.output.shouldContain("Stopping ElasticMQ local server instance")
         }
     }
 })

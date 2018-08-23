@@ -5,9 +5,9 @@ import org.elasticmq.rest.sqs.SQSRestServer
 import org.elasticmq.rest.sqs.SQSRestServerBuilder
 import org.gradle.api.Project
 
-internal class Server(
+internal class ElasticMqInstance(
         private val project: Project,
-        val config: ServerConfiguration
+        val config: ServerInstanceConfiguration
 ) {
     @Volatile
     private var sqsRestServer: SQSRestServer? = null
@@ -19,7 +19,7 @@ internal class Server(
     fun start() {
         if (isRunning()) return
 
-        project.logger.lifecycle("Starting ElasticMQ ${config.name} server")
+        project.logger.lifecycle("Starting ElasticMQ ${config.name} server instance")
         sqsRestServer = SQSRestServerBuilder
                 .withSQSLimits(config.getSqsLimits())
                 .withServerAddress(NodeAddress(
@@ -44,7 +44,7 @@ internal class Server(
     fun stop() {
         if (!isRunning()) return
 
-        project.logger.lifecycle("Stopping ElasticMQ ${config.name} server")
+        project.logger.lifecycle("Stopping ElasticMQ ${config.name} server instance")
         sqsRestServer = sqsRestServer?.let { it.stopAndWait(); null }
     }
 

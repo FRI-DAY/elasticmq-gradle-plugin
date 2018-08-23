@@ -9,7 +9,7 @@ import org.gradle.api.tasks.TaskAction
  * Parent of all the tasks regarding ElasticMQ servers.
  */
 sealed class ElasticMqTask(
-        private val action: Server.() -> Unit
+        private val action: ElasticMqInstance.() -> Unit
 ): DefaultTask() {
 
     internal val serverNameProperty =
@@ -21,21 +21,21 @@ sealed class ElasticMqTask(
         @Input get() = serverNameProperty.get()
 
     /**
-     * Performs the [action] on the [ServerConfiguration] with the same name as
+     * Performs the [action] on the [ServerInstanceConfiguration] with the same name as
      * the [serverName] property.
      */
     @TaskAction
     fun doAction() {
-        project.elasticmq.instances.getByName(serverName).server.action()
+        project.elasticmq.instances.getByName(serverName).elasticMqInstance.action()
     }
 }
 
 /**
  * Starts a named ElasticMQ Server instance.
  */
-open class StartElasticMq: ElasticMqTask(Server::start)
+open class StartElasticMq: ElasticMqTask(ElasticMqInstance::start)
 
 /**
  * Stops a named ElasticMQ Server instance.
  */
-open class StopElasticMq: ElasticMqTask(Server::stop)
+open class StopElasticMq: ElasticMqTask(ElasticMqInstance::stop)
