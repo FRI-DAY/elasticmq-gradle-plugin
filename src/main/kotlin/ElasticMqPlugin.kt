@@ -44,7 +44,7 @@ class ElasticMqPlugin: Plugin<Project> {
 
         project.gradle.buildFinished {
             extension.instances.forEach { serverConfiguration ->
-                serverConfiguration.elasticMqInstance.ensureIsStopped()
+                serverConfiguration.elasticMqInstance.stop()
             }
         }
 

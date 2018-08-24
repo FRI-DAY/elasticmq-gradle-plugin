@@ -35,7 +35,7 @@ private fun withProject(test: (Project, ServerInstanceConfiguration) -> Unit) {
     try {
         test(project, config)
     } finally {
-        config.elasticMqInstance.ensureIsStopped()
+        config.elasticMqInstance.stop()
     }
 }
 

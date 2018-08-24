@@ -50,11 +50,4 @@ internal class ElasticMqInstance(
         project.logger.lifecycle("Stopping ElasticMQ ${config.name} server instance")
         sqsRestServer = sqsRestServer?.let { it.stopAndWait(); null }
     }
-
-    @Synchronized
-    fun ensureIsStopped() {
-        if (isRunning()) {
-            stop()
-        }
-    }
 }
