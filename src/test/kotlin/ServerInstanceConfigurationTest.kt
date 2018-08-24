@@ -8,7 +8,7 @@ import io.kotlintest.specs.WordSpec
 import org.elasticmq.rest.sqs.SQSLimits
 import org.gradle.testfixtures.ProjectBuilder
 
-class ServerInstanceConfigurationTest: WordSpec({
+class ServerInstanceConfigurationTest : WordSpec({
 
     "Server Instance Configuration" should {
         "Not accept an empty name" {
@@ -91,7 +91,6 @@ class ServerInstanceConfigurationTest: WordSpec({
             serverConfiguration().queues.shouldBeEmpty()
         }
     }
-
 })
 
 private fun serverConfiguration(name: String = "sample") =

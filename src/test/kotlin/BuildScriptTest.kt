@@ -3,11 +3,11 @@ package de.friday.gradle.elasticmq
 import io.kotlintest.matchers.string.shouldContain
 import io.kotlintest.should
 import io.kotlintest.specs.WordSpec
+import java.nio.file.Files
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
-import java.nio.file.Files
 
-class BuildScriptTest: WordSpec({
+class BuildScriptTest : WordSpec({
 
     "A configured Groovy DSL builscript" should {
         "Lead to a successful build" {

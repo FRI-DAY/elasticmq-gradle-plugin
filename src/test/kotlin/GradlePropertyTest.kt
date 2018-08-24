@@ -6,7 +6,7 @@ import io.kotlintest.shouldThrow
 import io.kotlintest.specs.WordSpec
 import org.gradle.testfixtures.ProjectBuilder
 
-class GradlePropertyTest: WordSpec({
+class GradlePropertyTest : WordSpec({
 
     "Gradle Property" should {
         "Return the exact same value that was set" {
@@ -36,7 +36,6 @@ class GradlePropertyTest: WordSpec({
             sample.field should beTheSameInstanceAs(value)
         }
     }
-
 })
 
 private class Sample {

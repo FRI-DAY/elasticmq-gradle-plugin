@@ -4,7 +4,7 @@ import io.kotlintest.shouldNotBe
 import io.kotlintest.specs.WordSpec
 import org.gradle.testfixtures.ProjectBuilder
 
-class PluginTest: WordSpec({
+class PluginTest : WordSpec({
 
     "Using the Plugin ID" should {
         "Apply the Plugin" {
@@ -23,5 +23,4 @@ class PluginTest: WordSpec({
             project.elasticmq() shouldNotBe null
         }
     }
-
 })

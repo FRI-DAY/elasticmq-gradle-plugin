@@ -33,7 +33,7 @@ private const val EXTENSION_NAME = "elasticmq"
  * and `stopLocalElasticMq` tasks are automatically created. New tasks can be
  * added by leveraging the [StartElasticMq] and [StopElasticMq] task types.
  */
-class ElasticMqPlugin: Plugin<Project> {
+class ElasticMqPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val extension = project.extensions.create(
                 EXTENSION_NAME,

@@ -5,7 +5,7 @@ import io.kotlintest.shouldThrow
 import io.kotlintest.specs.WordSpec
 import org.gradle.testfixtures.ProjectBuilder
 
-class QueueConfigurationTest: WordSpec({
+class QueueConfigurationTest : WordSpec({
 
     "Queue Configuration" should {
         "Not accept an empty name" {
@@ -35,7 +35,6 @@ class QueueConfigurationTest: WordSpec({
             config.attributes["attribute-2"] shouldBe "second"
         }
     }
-
 })
 
 private fun queueConfiguration(name: String = "sample") =

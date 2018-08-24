@@ -6,7 +6,7 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import org.gradle.testfixtures.ProjectBuilder
 
-class TaskGenTest: WordSpec({
+class TaskGenTest : WordSpec({
 
     "Task generation" should {
         "Capitalize lower case words" {
@@ -57,10 +57,9 @@ class TaskGenTest: WordSpec({
             }
         }
     }
-
 })
 
-private fun project(name: String) = ProjectBuilder.builder().build().also {
-    it.pluginManager.apply(ElasticMqPlugin::class.java)
-    it.elasticmq().instances.create(name)
+private fun project(name: String) = ProjectBuilder.builder().build().also { project ->
+    project.pluginManager.apply(ElasticMqPlugin::class.java)
+    project.elasticmq().instances.create(name)
 }

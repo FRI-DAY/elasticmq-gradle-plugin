@@ -18,6 +18,7 @@ repositories {
 }
 
 dependencies {
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0.RC8")
     implementation(kotlin("stdlib", "1.2.61"))
     implementation("com.amazonaws:aws-java-sdk-sqs:1.11.391")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.5")

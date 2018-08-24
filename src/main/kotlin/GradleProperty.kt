@@ -1,12 +1,12 @@
 package de.friday.gradle.elasticmq
 
-import org.gradle.api.Project
 import kotlin.reflect.KProperty
+import org.gradle.api.Project
 
 internal class GradleProperty<T>(
-        project: Project,
-        type: Class<T>,
-        default: T? = null
+    project: Project,
+    type: Class<T>,
+    default: T? = null
 ) {
     val property = project.objects.property(type).apply {
         set(default)
@@ -21,8 +21,8 @@ internal class GradleProperty<T>(
 
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 internal class GradleIntProperty(
-        project: Project,
-        default: Int? = null
+    project: Project,
+    default: Int? = null
 ) {
     val property = project.objects.property(Integer::class.java).apply {
         set(default as? Integer)

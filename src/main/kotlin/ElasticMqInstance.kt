@@ -6,8 +6,8 @@ import org.elasticmq.rest.sqs.SQSRestServerBuilder
 import org.gradle.api.Project
 
 internal class ElasticMqInstance(
-        private val project: Project,
-        val config: ServerInstanceConfiguration
+    private val project: Project,
+    val config: ServerInstanceConfiguration
 ) {
     @Volatile
     private var sqsRestServer: SQSRestServer? = null

@@ -20,8 +20,8 @@ private const val DEFAULT_PORT = 9324
  * Configuration for an ElasticMQ server instance.
  */
 class ServerInstanceConfiguration(
-        val name: String,
-        project: Project
+    val name: String,
+    project: Project
 ) {
 
     init {
@@ -50,7 +50,7 @@ class ServerInstanceConfiguration(
      * @param [config] lambda to configure the queues.
      */
     fun queues(config: QueueConfigurationContainer.() -> Unit) {
-        queues.configure(object: Closure<Unit>(this, this) {
+        queues.configure(object : Closure<Unit>(this, this) {
             fun doCall() {
                 @Suppress("UNCHECKED_CAST")
                 (delegate as? QueueConfigurationContainer)?.let {

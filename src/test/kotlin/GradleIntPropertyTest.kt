@@ -5,7 +5,7 @@ import io.kotlintest.shouldThrow
 import io.kotlintest.specs.WordSpec
 import org.gradle.testfixtures.ProjectBuilder
 
-class GradleIntPropertyTest: WordSpec({
+class GradleIntPropertyTest : WordSpec({
 
     "Gradle Int Property" should {
         "Return the same value that was set" {
@@ -32,7 +32,6 @@ class GradleIntPropertyTest: WordSpec({
             sample.field shouldBe 1234
         }
     }
-
 })
 
 private class IntSample {
