@@ -7,8 +7,8 @@ import org.gradle.api.Project
  * Configuration for an ElasticMQ server instance.
  */
 class QueueConfiguration(
-        project: Project,
-        val name: String
+        val name: String,
+        project: Project
 ) {
 
     init {

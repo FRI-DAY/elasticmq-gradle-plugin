@@ -20,8 +20,8 @@ private const val DEFAULT_PORT = 9324
  * Configuration for an ElasticMQ server instance.
  */
 class ServerInstanceConfiguration(
-        private val project: Project,
-        val name: String
+        val name: String,
+        project: Project
 ) {
 
     init {
@@ -41,7 +41,7 @@ class ServerInstanceConfiguration(
     var port by GradleIntProperty(project, DEFAULT_PORT)
 
     val queues = project.container(QueueConfiguration::class.java) { name ->
-        QueueConfiguration(project, name)
+        QueueConfiguration(name, project)
     }
 
     /**

@@ -38,6 +38,5 @@ class QueueConfigurationTest: WordSpec({
 
 })
 
-private fun queueConfiguration(name: String = "sample") = ProjectBuilder.builder().build().let {
-    QueueConfiguration(it, name)
-}
+private fun queueConfiguration(name: String = "sample") =
+        QueueConfiguration(name, ProjectBuilder.builder().build())

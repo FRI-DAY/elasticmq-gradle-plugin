@@ -39,7 +39,7 @@ class ElasticMqPlugin: Plugin<Project> {
                 EXTENSION_NAME,
                 ElasticMqExtension::class.java,
                 project.container(ServerInstanceConfiguration::class.java) { name ->
-                    ServerInstanceConfiguration(project, name)
+                    ServerInstanceConfiguration(name, project)
                 })
 
         project.gradle.buildFinished {

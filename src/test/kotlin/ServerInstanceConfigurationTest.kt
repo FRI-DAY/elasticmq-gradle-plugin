@@ -95,4 +95,4 @@ class ServerInstanceConfigurationTest: WordSpec({
 })
 
 private fun serverConfiguration(name: String = "sample") =
-        ServerInstanceConfiguration(ProjectBuilder.builder().build(), name)
+        ServerInstanceConfiguration(name, ProjectBuilder.builder().build())
