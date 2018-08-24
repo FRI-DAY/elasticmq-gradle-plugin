@@ -50,16 +50,16 @@ class ElasticMqPlugin: Plugin<Project> {
 
         extension.instances.all { serverConfiguration ->
             val name = convertToTaskName(serverConfiguration.name)
-            val startName = "start${name}ElasticMq"
-            val stopName = "stop${name}ElasticMq"
 
-            project.tasks.create(startName, StartElasticMq::class.java) {
-                it.serverName = serverConfiguration.name
-            }
+            project.tasks.register(
+                    "start${name}ElasticMq",
+                    StartElasticMq::class.java,
+                    serverConfiguration.name)
 
-            project.tasks.create(stopName, StopElasticMq::class.java) {
-                it.serverName = serverConfiguration.name
-            }
+            project.tasks.register(
+                    "stop${name}ElasticMq",
+                    StopElasticMq::class.java,
+                    serverConfiguration.name)
         }
     }
 }

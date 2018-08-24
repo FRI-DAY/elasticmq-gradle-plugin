@@ -2,23 +2,20 @@ package de.friday.gradle.elasticmq
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
+import javax.inject.Inject
 
 /**
  * Parent of all the tasks regarding ElasticMQ servers.
  */
 sealed class ElasticMqTask(
-        private val action: ElasticMqInstance.() -> Unit
+        private val action: ElasticMqInstance.() -> Unit,
+        @Input val serverName: String
 ): DefaultTask() {
 
-    internal val serverNameProperty =
-            project.objects.property(String::class.java)
-        @Internal get
-
-    var serverName: String
-        set(value) = serverNameProperty.set(value)
-        @Input get() = serverNameProperty.get()
+    init {
+        group = "elasticmq"
+    }
 
     /**
      * Performs the [action] on the [ServerInstanceConfiguration] with the same name as
@@ -33,9 +30,23 @@ sealed class ElasticMqTask(
 /**
  * Starts a named ElasticMQ Server instance.
  */
-open class StartElasticMq: ElasticMqTask(ElasticMqInstance::start)
+open class StartElasticMq
+    @Inject constructor(name: String):
+        ElasticMqTask(ElasticMqInstance::start, name) {
+
+    init {
+        description = "Starts the ${name} ElasticMQ Server Instance, if not running"
+    }
+}
 
 /**
  * Stops a named ElasticMQ Server instance.
  */
-open class StopElasticMq: ElasticMqTask(ElasticMqInstance::stop)
+open class StopElasticMq
+    @Inject constructor(name: String):
+        ElasticMqTask(ElasticMqInstance::stop, name) {
+
+    init {
+        description = "Stops the ${name} ElasticMQ Server Instance, if running"
+    }
+}

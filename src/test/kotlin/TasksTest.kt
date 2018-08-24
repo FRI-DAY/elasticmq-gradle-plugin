@@ -1,6 +1,7 @@
 package de.friday.gradle.elasticmq
 
 import com.amazonaws.SdkClientException
+import io.kotlintest.matchers.string.shouldContain
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import org.gradle.api.Project
@@ -15,6 +16,16 @@ class TasksTest: WordSpec({
             config.elasticMqInstance.isRunning() shouldBe true
             canConnect(config) shouldBe true
         }}
+
+        "Belong to the elasticmq group" { withProject { project, _ ->
+            val task = project.tasks.withType(StartElasticMq::class.java).single()
+            task.group shouldBe "elasticmq"
+        }}
+
+        "Include the instance name in the description" { withProject { project, _ ->
+            val task = project.tasks.withType(StartElasticMq::class.java).single()
+            task.description.shouldContain("instance-name")
+        }}
     }
 
     "Stop ElasticMQ Server Task" should {
@@ -24,6 +35,17 @@ class TasksTest: WordSpec({
 
             config.elasticMqInstance.isRunning() shouldBe false
             canConnect(config) shouldBe false
+        }}
+
+        "Belong to the elasticmq group" { withProject { project, _ ->
+            val task = project.tasks.withType(StopElasticMq::class.java).single()
+            task.group shouldBe "elasticmq"
+
+        }}
+
+        "Include the instance name in the description" { withProject { project, _ ->
+            val task = project.tasks.withType(StopElasticMq::class.java).single()
+            task.description.shouldContain("instance-name")
         }}
     }
 
@@ -41,7 +63,7 @@ private fun withProject(test: (Project, ServerInstanceConfiguration) -> Unit) {
 
 private fun project() = ProjectBuilder.builder().build().also {
     it.pluginManager.apply(ElasticMqPlugin::class.java)
-    it.elasticmq().instances.create("local")
+    it.elasticmq().instances.create("instance-name")
 }
 
 private fun canConnect(config: ServerInstanceConfiguration) = try {
