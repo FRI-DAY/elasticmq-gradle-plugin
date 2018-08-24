@@ -29,7 +29,7 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
         }
 
         from(file("integration-test")) {
-            rename("_$script", script)
+            rename("^_${script}$", script)
         }
 
         into("$buildDir/integrationTests/${dsl.toLowerCase()}-dsl")
