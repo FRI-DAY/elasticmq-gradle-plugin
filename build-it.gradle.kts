@@ -49,9 +49,9 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
         }
 
         if (System.getenv("CI") == "true") {
-            args("build", "--no-daemon")
+            args("build", "--stacktrace", "--no-daemon")
         } else {
-            args("build")
+            args("build", "--stacktrace")
         }
     }
 }
