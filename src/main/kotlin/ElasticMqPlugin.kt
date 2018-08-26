@@ -38,9 +38,7 @@ class ElasticMqPlugin : Plugin<Project> {
         val extension = project.extensions.create(
                 EXTENSION_NAME,
                 ElasticMqExtension::class.java,
-                project.container(ServerInstanceConfiguration::class.java) { name ->
-                    ServerInstanceConfiguration(name, project)
-                })
+                project)
 
         project.gradle.buildFinished {
             extension.instances.forEach { serverConfiguration ->
