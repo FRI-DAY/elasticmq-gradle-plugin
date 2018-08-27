@@ -1,15 +1,10 @@
 package de.friday.gradle.elasticmq
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider
-import com.amazonaws.auth.AnonymousAWSCredentials
-import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder
 import groovy.lang.Closure
 import org.elasticmq.rest.sqs.SQSLimits
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
-private const val ELASTICMQ_REGION = "elasticmq"
 private const val DEFAULT_CONTEXT_PATH = ""
 private const val DEFAULT_PROTOCOL = "http"
 private const val DEFAULT_LIMITS = "strict"
@@ -71,21 +66,13 @@ class ServerInstanceConfiguration(
 
     internal var elasticMqInstance = ElasticMqInstance(project, this)
 
-    internal fun createClient() = AmazonSQSClientBuilder
-            .standard()
-            .withCredentials(
-                    AWSStaticCredentialsProvider(AnonymousAWSCredentials()))
-            .withEndpointConfiguration(EndpointConfiguration(
-                    "$protocol://$host:$port",
-                    ELASTICMQ_REGION))
-            .build()
-
-    internal fun getSqsLimits() = when (limits) {
-        "relaxed" -> SQSLimits.Relaxed()
-        "strict" -> SQSLimits.Strict()
-        else -> throw IllegalArgumentException(
-                "Only 'strict' and 'relaxed' are accepted as limits")
-    }
+    internal val sqsLimits
+        get() = when (limits) {
+            "relaxed" -> SQSLimits.Relaxed()
+            "strict" -> SQSLimits.Strict()
+            else -> throw IllegalArgumentException(
+                    "Only 'strict' and 'relaxed' are accepted as limits")
+        }
 }
 
 internal typealias ServerInstanceConfigurationContainer =

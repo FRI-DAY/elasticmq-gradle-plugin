@@ -45,14 +45,14 @@ class ServerInstanceConfigurationTest : WordSpec({
             val config = serverConfiguration()
             config.limits = "relaxed"
 
-            config.getSqsLimits() shouldBe SQSLimits.Relaxed()
+            config.sqsLimits shouldBe SQSLimits.Relaxed()
         }
 
         "Be mapped to an instance on 'strict'" {
             val config = serverConfiguration()
             config.limits = "strict"
 
-            config.getSqsLimits() shouldBe SQSLimits.Strict()
+            config.sqsLimits shouldBe SQSLimits.Strict()
         }
 
         "Fail mapping on unknown values" {
@@ -60,7 +60,7 @@ class ServerInstanceConfigurationTest : WordSpec({
             config.limits = "non-existing-limit"
 
             shouldThrow<IllegalArgumentException> {
-                config.getSqsLimits()
+                config.sqsLimits
             }
         }
 
@@ -69,7 +69,7 @@ class ServerInstanceConfigurationTest : WordSpec({
             config.limits = "STRICT"
 
             shouldThrow<IllegalArgumentException> {
-                config.getSqsLimits()
+                config.sqsLimits
             }
         }
     }
