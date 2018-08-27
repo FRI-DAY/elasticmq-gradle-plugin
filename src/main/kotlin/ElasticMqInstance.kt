@@ -19,7 +19,7 @@ internal class ElasticMqInstance(
     fun start() {
         if (isRunning()) return
 
-        project.logger.lifecycle("Starting ElasticMQ ${config.name} server instance")
+        project.logger.info("Starting ElasticMQ ${config.name} server instance")
         sqsRestServer = SQSRestServerBuilder
                 .withSQSLimits(config.getSqsLimits())
                 .withServerAddress(NodeAddress(
@@ -47,7 +47,7 @@ internal class ElasticMqInstance(
     fun stop() {
         if (!isRunning()) return
 
-        project.logger.lifecycle("Stopping ElasticMQ ${config.name} server instance")
+        project.logger.info("Stopping ElasticMQ ${config.name} server instance")
         sqsRestServer = sqsRestServer?.let { it.stopAndWait(); null }
     }
 }

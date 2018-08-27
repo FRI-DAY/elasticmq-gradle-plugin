@@ -47,7 +47,7 @@ class BuildScriptTest : WordSpec({
             val result = GradleRunner.create()
                     .withProjectDir(projectDir.toFile())
                     .withPluginClasspath()
-                    .withArguments("example", "--stacktrace")
+                    .withArguments("example", "--info", "--stacktrace")
                     .build()
 
             result.task(":startLocalElasticMq") should {
@@ -99,7 +99,7 @@ class BuildScriptTest : WordSpec({
             val result = GradleRunner.create()
                     .withProjectDir(projectDir.toFile())
                     .withPluginClasspath()
-                    .withArguments("example", "--stacktrace")
+                    .withArguments("example", "--info", "--stacktrace")
                     .build()
 
             result.task(":startLocalElasticMq") should {
@@ -136,7 +136,7 @@ class BuildScriptTest : WordSpec({
             val result = GradleRunner.create()
                     .withProjectDir(projectDir.toFile())
                     .withPluginClasspath()
-                    .withArguments("startLocalElasticMq", "--stacktrace")
+                    .withArguments("startLocalElasticMq", "--info", "--stacktrace")
                     .build()
 
             result.task(":startLocalElasticMq") should {
