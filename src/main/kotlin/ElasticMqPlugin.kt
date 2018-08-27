@@ -69,11 +69,11 @@ internal fun Project.elasticmq(): ElasticMqExtension =
 
 internal fun convertToTaskName(name: String) =
         name.toLowerCase()
-            .map { if (isValidTaskNameCharacter(it)) it else ' ' }
+            .map(::toValidTaskNameCharacters)
             .joinToString(separator = "")
             .toCamelCase()
 
-private fun isValidTaskNameCharacter(char: Char) =
-        char != '_' && Character.isJavaIdentifierPart(char)
+private fun toValidTaskNameCharacters(char: Char): Char =
+        if (char != '_' && Character.isJavaIdentifierPart(char)) { char } else { ' ' }
 
 private fun String.toCamelCase() = GUtil.toCamelCase(this)
