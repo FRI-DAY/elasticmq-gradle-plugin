@@ -17,15 +17,15 @@ class TasksTest : WordSpec({
             canConnect(config) shouldBe true
         } }
 
-        "Belong to the elasticmq group" { withProject { project, _ ->
-            val task = project.tasks.withType(StartElasticMq::class.java).single()
+        "Belong to the elasticmq group" {
+            val task = project().tasks.withType(StartElasticMq::class.java).single()
             task.group shouldBe "elasticmq"
-        } }
+        }
 
-        "Include the instance name in the description" { withProject { project, _ ->
-            val task = project.tasks.withType(StartElasticMq::class.java).single()
+        "Include the instance name in the description" {
+            val task = project().tasks.withType(StartElasticMq::class.java).single()
             task.description.shouldContain("instance-name")
-        } }
+        }
     }
 
     "Stop ElasticMQ Server Task" should {
@@ -37,15 +37,15 @@ class TasksTest : WordSpec({
             canConnect(config) shouldBe false
         } }
 
-        "Belong to the elasticmq group" { withProject { project, _ ->
-            val task = project.tasks.withType(StopElasticMq::class.java).single()
+        "Belong to the elasticmq group" {
+            val task = project().tasks.withType(StopElasticMq::class.java).single()
             task.group shouldBe "elasticmq"
-        } }
+        }
 
-        "Include the instance name in the description" { withProject { project, _ ->
-            val task = project.tasks.withType(StopElasticMq::class.java).single()
+        "Include the instance name in the description" {
+            val task = project().tasks.withType(StopElasticMq::class.java).single()
             task.description.shouldContain("instance-name")
-        } }
+        }
     }
 })
 
