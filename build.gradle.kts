@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.DetektCheckTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "de.friday"
-version = "0.1.0"
+version = "1.0.0-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.2.61"

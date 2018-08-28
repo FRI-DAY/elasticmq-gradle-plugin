@@ -1,7 +1,7 @@
 
 plugins {
     kotlin("jvm") version "1.2.61"
-    id("de.friday.elasticmq") version "0.1.0"
+    id("de.friday.elasticmq") version "1.0.0-SNAPSHOT"
 }
 
 repositories {
