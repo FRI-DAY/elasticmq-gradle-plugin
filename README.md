@@ -12,7 +12,7 @@ list!
 
 ```groovy
 plugins {
-    id 'de.friday.elasticmq' version '0.1.0'
+    id 'de.friday.elasticmq' version '1.0.0-SNAPSHOT'
 }
 ``` 
 
