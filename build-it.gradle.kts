@@ -1,4 +1,4 @@
-import org.gradle.internal.os.OperatingSystem
+import org.apache.tools.ant.taskdefs.condition.Os
 import java.io.OutputStream
 
 val integrationTestGroovy = createIntegrationTestTask("groovy", "build.gradle")
@@ -42,7 +42,7 @@ fun createIntegrationTestTask(dsl: String, script: String): Task {
             override fun write(ignored: Int) {}
         }
 
-        if (OperatingSystem.current().isWindows()) {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             commandLine("cmd", "/c", "gradlew.bat")
         } else {
             commandLine("./gradlew")
