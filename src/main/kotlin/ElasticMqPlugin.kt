@@ -47,7 +47,7 @@ class ElasticMqPlugin : Plugin<Project> {
         }
 
         extension.instances.all { serverConfiguration ->
-            val name = convertToTaskName(serverConfiguration.name)
+            val name = serverConfiguration.name.toTaskName()
 
             project.tasks.register(
                     "start${name}ElasticMq",
@@ -67,8 +67,8 @@ internal fun Project.elasticmq(): ElasticMqExtension =
     extensions.getByName(EXTENSION_NAME) as? ElasticMqExtension
     ?: throw IllegalStateException("$EXTENSION_NAME is not of the correct type")
 
-internal fun convertToTaskName(name: String) =
-        name.toLowerCase()
+internal fun String.toTaskName() =
+        this.toLowerCase()
             .map(::toValidTaskNameCharacters)
             .joinToString(separator = "")
             .toCamelCase()
