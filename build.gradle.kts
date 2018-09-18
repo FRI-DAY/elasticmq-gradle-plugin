@@ -1,5 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.gitlab.arturbosch.detekt.DetektCheckTask
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "de.friday"
@@ -8,7 +8,7 @@ version = "1.0.0-SNAPSHOT"
 plugins {
     kotlin("jvm") version "1.2.70"
     id("java-gradle-plugin")
-    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
+    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC9"
     id("com.github.ben-manes.versions") version "0.20.0"
     id("com.github.johnrengelman.shadow") version "2.0.4"
 }
@@ -18,7 +18,8 @@ repositories {
 }
 
 dependencies {
-    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0.RC8")
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0.RC9")
+    detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC9")
     implementation(kotlin("stdlib", "1.2.70"))
     implementation("com.amazonaws:aws-java-sdk-sqs:1.11.396")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.5")
@@ -35,10 +36,8 @@ gradlePlugin {
 }
 
 detekt {
-    defaultProfile(Action {
-        config = file("detekt.yml")
-        input = "$projectDir/src"
-    })
+    config = files("detekt.yml")
+    input = files("$projectDir/src")
 }
 
 tasks.withType<Test> {
@@ -49,7 +48,9 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.allWarningsAsErrors = true
 }
 
-tasks.getByName("check").dependsOn(tasks.withType<DetektCheckTask>())
+tasks.getByName("check") {
+    dependsOn(tasks.withType<Detekt>())
+}
 
 tasks.withType<ShadowJar> {
     mergeServiceFiles("*.conf")
