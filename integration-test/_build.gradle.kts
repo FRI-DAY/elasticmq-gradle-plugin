@@ -1,6 +1,6 @@
 
 plugins {
-    kotlin("jvm") version "1.2.61"
+    kotlin("jvm") version "1.2.70"
     id("de.friday.elasticmq") version "1.0.0-SNAPSHOT"
 }
 
@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("stdlib", "1.2.61"))
-    testImplementation(kotlin("test-junit5", "1.2.61"))
+    testImplementation(kotlin("stdlib", "1.2.70"))
+    testImplementation(kotlin("test-junit5", "1.2.70"))
     testImplementation("com.amazonaws:aws-java-sdk-sqs:1.11.396")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.2.0")
 }
