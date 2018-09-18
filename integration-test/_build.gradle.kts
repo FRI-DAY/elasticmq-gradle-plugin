@@ -11,7 +11,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("stdlib", "1.2.70"))
     testImplementation(kotlin("test-junit5", "1.2.70"))
-    testImplementation("com.amazonaws:aws-java-sdk-sqs:1.11.396")
+    testImplementation("com.amazonaws:aws-java-sdk-sqs:1.11.409")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.1")
 }
 
