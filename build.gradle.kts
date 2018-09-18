@@ -22,7 +22,7 @@ dependencies {
     implementation(kotlin("stdlib", "1.2.70"))
     implementation("com.amazonaws:aws-java-sdk-sqs:1.11.396")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.5")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
 }
 
 gradlePlugin {
