@@ -21,7 +21,7 @@ dependencies {
     detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0.RC9")
     detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC9")
     implementation(kotlin("stdlib", "1.2.70"))
-    implementation("com.amazonaws:aws-java-sdk-sqs:1.11.409")
+    implementation("com.amazonaws:aws-java-sdk-sqs:1.11.519")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.5")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
 }
