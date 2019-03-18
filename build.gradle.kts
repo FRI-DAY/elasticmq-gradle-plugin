@@ -10,7 +10,7 @@ plugins {
     id("java-gradle-plugin")
     id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
     id("com.github.ben-manes.versions") version "0.21.0"
-    id("com.github.johnrengelman.shadow") version "2.0.4"
+    id("com.github.johnrengelman.shadow") version "5.0.0"
 }
 
 repositories {
