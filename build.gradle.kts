@@ -6,7 +6,7 @@ group = "de.friday"
 version = "1.0.0-SNAPSHOT"
 
 plugins {
-    kotlin("jvm") version "1.2.70"
+    kotlin("jvm") version "1.3.21"
     id("java-gradle-plugin")
     id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
     id("com.github.ben-manes.versions") version "0.21.0"
@@ -20,10 +20,11 @@ repositories {
 dependencies {
     detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-RC14")
     detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.0.0-RC14")
-    implementation(kotlin("stdlib", "1.2.70"))
+    implementation(kotlin("stdlib", "1.3.21"))
+    implementation(kotlin("reflect", "1.3.21"))
     implementation("com.amazonaws:aws-java-sdk-sqs:1.11.519")
     implementation("org.elasticmq:elasticmq-rest-sqs_2.12:0.14.6")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.1")
 }
 
 gradlePlugin {
