@@ -67,6 +67,7 @@ private fun project() = ProjectBuilder.builder().build().also { project ->
 private fun canConnect(config: ServerInstanceConfiguration) = try {
     config.elasticMqInstance.createClient().createQueue("queue").queueUrl
     true
-} catch (e: SdkClientException) {
+} catch (error: SdkClientException) {
+    println(error)
     false
 }
